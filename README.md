@@ -1,2 +1,2 @@
 # cHamster-Projekt
-School Project / Projekt Szkolny
+School Project / Projekt Szkolny - strona internetowa
