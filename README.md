@@ -1,2 +1,2 @@
 # cHamster-Projekt
-School Project
+School Project / Projekt Szkolny
