@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mój Chomik</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="main">
+
+    <header>
+        <h1>Mój Chomik</h1>
+        <div class="kwota">
+            <p id="kwota_kwota"> Saldo: 1000 zł</p>
+        </div>
+    </header>
+
+    <nav class="navigation">
+        <a href="main.html" class="nav-guzik">Wyścigi</a>
+        <a href="shop.html" class="nav-guzik">Sklep</a>
+        <a href="inventory.html" class="nav-guzik active">Mój Chomik</a>
+    </nav>
+
+    <div class="chomik_edycja_div">
+        <div class="podglad_div">
+            <canvas id="hamsterPreview" width="200" height="200"></canvas>  <!-- tutaj podglad chomika-->
+            <label>
+                <input type="checkbox" id="uzyjChomika" checked>
+                <label for="uzyjChomika">Użyj mojego chomika w wyścigach</label>
+            </label>
+        </div>
+
+        <div class="skorki_div">
+            <div id="posiadane_skiny"></div>
+            <div id="wybrane_skiny"></div>
+        </div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

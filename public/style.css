@@ -12,7 +12,7 @@ body {
     padding: 10px;
 }
 
-.container {
+.main {
     max-width: 1200px;
     margin: 0 auto;
     background: white;
@@ -41,13 +41,13 @@ header h1 {
     align-items: center;
 }
 
-.balance {
+.kwota {
     font-weight: bold;
     color: #2e7d32;
     font-size: 1.1em;
 }
 
-.main-nav {
+.navigation {
     display: flex;
     gap: 5px;
     margin-bottom: 15px;
@@ -55,7 +55,8 @@ header h1 {
     padding-bottom: 10px;
 }
 
-.nav-btn {
+.nav-guzik {
+    text-decoration: none;
     padding: 8px 12px;
     border: 1px solid #ccc;
     background: white;
@@ -64,16 +65,17 @@ header h1 {
     font-size: 0.9em;
 }
 
-.nav-btn:hover {
+.nav-guzik:hover {
     background: #f5f5f5;
 }
 
-.nav-btn.active {
+.nav-guzik.active {
+    text-decoration: none;
     background: #4a6baf;
     color: white;
     border-color: #4a6baf;
 }
-
+/*
 .tab-content {
     display: none;
 }
@@ -81,35 +83,35 @@ header h1 {
 .tab-content.active {
     display: block;
 }
-
-.game-area {
+*/
+.gra {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 15px;
     margin-bottom: 15px;
 }
 
-.betting-panel {
+.obstawianie_panel {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 6px;
     background: #f9f9f9;
 }
 
-.betting-panel h2 {
+.obstawianie h2 {
     margin-bottom: 15px;
     font-size: 1.2em;
     color: #444;
 }
 
-.hamsters-selection {
+.wybor_chomikow {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-bottom: 15px;
 }
 
-.hamster-option {
+.chomik-opcja {
     padding: 10px;
     border: 2px solid #ddd;
     border-radius: 6px;
@@ -118,15 +120,15 @@ header h1 {
     background: white;
 }
 
-.hamster-option:hover {
+.chomik-opcja:hover {
     border-color: #4a6baf;
 }
 
-.hamster-option.selected {
+.chomik-opcja.selected {
     border-color: #2e7d32;
     background: #e8f5e9;
 }
-
+/*
 .hamster-preview {
     height: 70px;
     display: flex;
@@ -134,8 +136,8 @@ header h1 {
     align-items: center;
     margin-bottom: 8px;
 }
-
-.ball {
+*/
+.kula {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -144,11 +146,11 @@ header h1 {
     align-items: center;
 }
 
-.ball-red { background: #ff4444; }
-.ball-blue { background: #4444ff; }
-.ball-green { background: #44ff44; }
-.ball-black { background: #222; border: 2px solid #ff9900; }
-.ball-custom { background: #ff9900; }
+.kula-czerw { background: #ff4444; }
+.kula-nieb { background: #4444ff; }
+.kula-ziel { background: #44ff44; }
+.kula-czar { background: #222; border: 2px solid #ff9900; }
+.kula-custom { background: #ff9900; }
 
 .hamster-img {
     width: 40px;
@@ -156,7 +158,7 @@ header h1 {
     object-fit: contain;
 }
 
-.bet-amount {
+.kwota_obstawiona {
     width: 100%;
     padding: 6px;
     border: 1px solid #ccc;
@@ -170,7 +172,7 @@ header h1 {
     gap: 10px;
     margin-top: 15px;
 }
-
+/*
 .btn {
     flex: 1;
     padding: 10px;
@@ -193,15 +195,15 @@ header h1 {
 .btn:hover {
     opacity: 0.9;
 }
-
-.race-track-container {
+*/
+.tor_wyscigowy_div {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 6px;
     background: #f9f9f9;
 }
 
-.race-track-container h2 {
+.tor_wyscigowy_div h2 {
     margin-bottom: 10px;
     font-size: 1.2em;
     color: #444;
@@ -213,7 +215,7 @@ header h1 {
     gap: 15px;
 }
 
-#raceTrack {
+#tor {
     width: 100%;
     height: 300px;
     border: 2px solid #333;
@@ -222,7 +224,7 @@ header h1 {
     display: block;
 }
 
-.race-status {
+.status_wyscigu {
     margin-top: 10px;
     padding: 8px;
     background: #f5f5f5;
@@ -232,7 +234,7 @@ header h1 {
     min-height: 30px;
 }
 
-.results-panel {
+.wyniki_div {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -240,16 +242,16 @@ header h1 {
     margin-top: 15px;
 }
 
-.results-panel h2 {
+.wyniki_div-panel h2 {
     margin-bottom: 10px;
     font-size: 1.2em;
     color: #444;
 }
 
-#results {
+#wyniki {
     min-height: 40px;
 }
-
+/*
 .result-item {
     padding: 8px;
     margin: 5px 0;
@@ -267,27 +269,27 @@ header h1 {
     background: #ffebee;
     border-left-color: #c62828;
 }
-
-.shop-container {
+*/
+.sklep_div {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 6px;
     background: #f9f9f9;
 }
 
-.shop-container h2 {
+.sklep_div h2 {
     margin-bottom: 15px;
     font-size: 1.2em;
     color: #444;
 }
 
-.shop-grid {
+.sklep_uklad {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 15px;
 }
 
-.shop-item {
+.sklep-item {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -295,12 +297,12 @@ header h1 {
     background: white;
 }
 
-.shop-item.owned {
+.sklep-item.posiadane {
     border-color: #2e7d32;
     background: #e8f5e9;
 }
 
-.shop-item-preview {
+.sklep-item-podglad {
     width: 80px;
     height: 80px;
     margin: 0 auto 10px;
@@ -312,18 +314,18 @@ header h1 {
     overflow: hidden;
 }
 
-.shop-item-name {
+.sklep-item-nazwa {
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.shop-item-price {
+.sklep-item-cena {
     color: #2e7d32;
     font-weight: bold;
     margin-bottom: 8px;
 }
 
-.shop-item-btn {
+.sklep-item-guzik {
     width: 100%;
     padding: 8px;
     background: #4a6baf;
@@ -333,42 +335,42 @@ header h1 {
     cursor: pointer;
 }
 
-.shop-item-btn:disabled {
+.sklep-item-guzik:disabled {
     background: #ccc;
     cursor: not-allowed;
 }
 
-.hamster-editor {
+.chomik_edycja_div {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 6px;
     background: #f9f9f9;
 }
 
-.hamster-editor h2 {
+.chomik_edycja_div h2 {
     margin-bottom: 15px;
     font-size: 1.2em;
     color: #444;
 }
-
+/*
 .editor-layout {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 15px;
 }
-
-.preview-section {
+*/
+.podglad_div {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 6px;
     background: white;
 }
 
-.preview-section h3 {
+.podglad_div h3 {
     margin-bottom: 10px;
     font-size: 1.1em;
 }
-
+/*
 .hamster-preview-large {
     height: 180px;
     display: flex;
@@ -383,20 +385,20 @@ header h1 {
 .preview-controls {
     margin-top: 10px;
 }
-
-.skins-section h3 {
+*/
+.skorki_div h3 {
     margin-bottom: 10px;
     font-size: 1.1em;
 }
 
-.owned-skins {
+.posiadane_skiny {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 10px;
     margin-bottom: 15px;
 }
 
-.owned-skin-item {
+.posiadane_skiny_pojedynczy {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -405,15 +407,15 @@ header h1 {
     cursor: pointer;
 }
 
-.owned-skin-item:hover {
+.posiadane_skiny_pojedynczy:hover {
     border-color: #4a6baf;
 }
 
-.owned-skin-item.active {
+.posiadane_skiny_pojedynczy.active {
     border-color: #2e7d32;
     background: #e8f5e9;
 }
-
+/*
 .owned-skin-preview {
     width: 60px;
     height: 60px;
@@ -441,13 +443,14 @@ header h1 {
 .skin-layers h4 {
     margin-bottom: 10px;
 }
+*/
 
-#activeLayers {
+#posiadane_skiny {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-
+/*
 .active-layer-item {
     padding: 8px;
     border: 1px solid #ddd;
@@ -473,25 +476,25 @@ header h1 {
     font-style: italic;
     padding: 20px;
 }
-
+*/
 @media (max-width: 768px) {
-    .game-area {
+    .gra {
         grid-template-columns: 1fr;
     }
-    
+    /*
     .editor-layout {
         grid-template-columns: 1fr;
     }
-    
-    .hamsters-selection {
+    */
+    .wybor_chomikow {
         grid-template-columns: 1fr;
     }
     
-    .shop-grid {
+    .sklep_uklad {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .owned-skins {
+    .posiadane_skiny {
         grid-template-columns: repeat(3, 1fr);
     }
 }
