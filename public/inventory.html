@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="main">
+
+<section class="main">
 
     <header>
         <h1>Mój Chomik</h1>
-        <div class="kwota">
+        <section class="kwota">
             <p id="kwota_kwota"> Saldo: 1000 zł</p>
-        </div>
+        </section>
     </header>
 
     <nav class="navigation">
@@ -22,22 +23,23 @@
         <a href="inventory.html" class="nav-guzik active">Mój Chomik</a>
     </nav>
 
-    <div class="chomik_edycja_div">
-        <div class="podglad_div">
-            <canvas id="hamsterPreview" width="200" height="200"></canvas>  <!-- tutaj podglad chomika-->
+    <section class="chomik_edycja_div">
+        <section class="podglad_div">
+            <canvas id="chomik_Podglad" width="200" height="200"></canvas>
+            <!-- tutaj podglad chomika damy-->
             <label>
                 <input type="checkbox" id="uzyjChomika" checked>
                 <label for="uzyjChomika">Użyj mojego chomika w wyścigach</label>
             </label>
-        </div>
+        </section>
 
-        <div class="skorki_div">
-            <div id="posiadane_skiny"></div>
-            <div id="wybrane_skiny"></div>
-        </div>
-    </div>
+        <section class="skorki_div">
+            <section id="posiadane_skiny"></section>
+            <section id="wybrane_skiny"></section>
+        </section>
+    </section>
 
-</div>
+</section>
 
 <script src="script.js"></script>
 </body>
