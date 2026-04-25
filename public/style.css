@@ -216,6 +216,11 @@ header {
     margin-bottom: 10px;
 }
 
+.chomik-ikona {
+    height: 40px;
+    width: 40px;
+}
+
 @media (max-width: 768px) {
     .gra {
         grid-template-columns: 1fr;
