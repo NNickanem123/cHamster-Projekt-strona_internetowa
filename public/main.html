@@ -1,93 +1,110 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wyścigi Chomików</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<section class="main">
-    <header>
-        <h1>Wyścigi Chomików</h1>
-        <section class="kwota">
-           <p id="kwota_kwota"> Saldo: 1000 zł</p>
-        </section>
-    </header>
+    <section class="main">
+        <header>
+            <h1>Wyścigi Chomików</h1>
+            <section class="kwota">
+                <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
+            </section>
+            <section class="user-info">
+                <span id="userName">Użytkownik</span>
+                <button id="logoutBtn">Wyloguj</button>
+            </section>
+        </header>
 
-    <nav class="navigation">
-        <a href="main.html" class="nav-guzik active">Wyścigi</a>
-        <a href="shop.html" class="nav-guzik">Sklep</a>
-        <a href="inventory.html" class="nav-guzik">Mój Chomik</a>
-    </nav> 
+        <nav class="navigation">
+            <a href="main.html" class="nav-guzik active">Wyścigi</a>
+            <a href="shop.html" class="nav-guzik">Sklep</a>
+            <a href="inventory.html" class="nav-guzik">Mój Chomik</a>
+        </nav>
 
-    <section class="gra">
-        <section class="obstawianie_panel">
-            <h2>Obstaw wyścig</h2>
+        <section class="gra">
+            <section class="obstawianie_panel">
+                <h2>Obstaw wyścig</h2>
 
-            <section class="wybor_chomikow">
+                <section class="wybor_chomikow">
 
-                <section class="chomik-opcja">
-                    <section class="kula kula-czerw">
-                        <img src="../assets/images/czerwony_homik.png" class="chomik-ikona">
+                    <section class="chomik-opcja">
+                        <section class="kula kula-czerw">
+                            <img src="../assets/images/czerwony_homik.png" class="chomik-ikona">
+                        </section>
+                        <p>Czerwony</p>
+                        <input type="number" class="kwota_obstawiona" min="1">
                     </section>
-                    <p>Czerwony</p>
-                    <input type="number" class="kwota_obstawiona" min="1">
+
+                    <section class="chomik-opcja">
+                        <section class="kula kula-nieb">
+                            <img src="../assets/images/niebieski_homik.png" class="chomik-ikona">
+                        </section>
+                        <p>Niebieski</p>
+                        <input type="number" class="kwota_obstawiona" min="1">
+                    </section>
+
+                    <section class="chomik-opcja">
+                        <section class="kula kula-ziel">
+                            <img src="../assets/images/zielony_homik.png" class="chomik-ikona">
+                        </section>
+                        <p>Zielony</p>
+                        <input type="number" class="kwota_obstawiona" min="1">
+                    </section>
+
+                    <section class="chomik-opcja">
+                        <section class="kula kula-czar">
+                            <img src="../assets/images/czarny_homik.png" class="chomik-ikona">
+                        </section>
+                        <p>Czarny</p>
+                        <input type="number" class="kwota_obstawiona" min="1">
+                    </section>
+
+                    <section class="chomik-opcja">
+                        <section class="kula kula-custom">
+                            <canvas id="myHamsterPreview" width="50" height="50"></canvas>
+                        </section>
+                        <p>Własny chomik</p>
+                        <input type="number" class="kwota_obstawiona" min="1">
+                    </section>
+
                 </section>
 
-                <section class="chomik-opcja">
-                    <section class="kula kula-nieb">
-                        <img src="../assets/images/niebieski_homik.png" class="chomik-ikona">
-                    </section>
-                    <p>Niebieski</p>
-                    <input type="number" class="kwota_obstawiona" min="1">
-                </section>
-
-                <section class="chomik-opcja">
-                    <section class="kula kula-ziel">
-                        <img src="../assets/images/zielony_homik.png" class="chomik-ikona">
-                    </section>
-                    <p>Zielony</p>
-                    <input type="number" class="kwota_obstawiona" min="1">
-                </section>
-
-                <section class="chomik-opcja">
-                    <section class="kula kula-czar">
-                        <img src="../assets/images/czarny_homik.png" class="chomik-ikona">
-                    </section>
-                    <p>Czarny</p>
-                    <input type="number" class="kwota_obstawiona" min="1">
-                </section>
-
-                <section class="chomik-opcja">
-                    <section class="kula kula-custom">
-                        <img src="../assets/images/homik.png" class="chomik-ikona">
-                    </section>
-                    <p>Własny chomik</p>
-                    <input type="number" class="kwota_obstawiona" min="1">
-                </section>
-
+                <button id="start_pusty">Zacznij wyścig</button>
+                <button id="reset_pusty">Reset</button>
             </section>
 
-            <button id="start_pusty">Zacznij wyścig</button>
-            <button id="reset_pusty">Reset</button>
+            <section class="tor_wyscigowy_div">
+                <h2>Tor wyścigowy</h2>
+                <section class="opcje_toru">
+                    <label>
+                        <input type="radio" name="trackType" value="straight" checked>
+                        Prosty tor
+                    </label>
+                    <label>
+                        <input type="radio" name="trackType" value="curved">
+                        Tor z zakrętami
+                    </label>
+                </section>
+                <canvas id="tor" width="800" height="400"></canvas>
+                <section id="status_wyscigu"></section>
+            </section>
         </section>
 
-        <section class="tor_wyscigowy_div">
-            <h2>Tor wyścigowy</h2>
-            <canvas id="tor" width="800" height="400"></canvas>
-            <section id="status_wyscigu"></section>
+        <section class="wyniki_div">
+            <h2>Wyniki</h2>
+            <section id="wyniki"></section>
         </section>
+
     </section>
 
-    <section class="wyniki_div">
-        <h2>Wyniki</h2>
-        <section id="wyniki"></section>
-    </section>
-
-</section>
-
-<script src="script.js"></script> 
+    <script src="script.js"></script>
 </body>
+
 </html>

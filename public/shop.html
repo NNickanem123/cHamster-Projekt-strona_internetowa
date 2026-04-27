@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sklep – Wyścigi Chomików</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<section class="main">
+    <section class="main">
 
-    <header>
-        <h1>Sklep z wyposażeniem</h1>
-        <section class="kwota">
-            <p id="kwota_kwota"> Saldo: 1000 zł</p>
+        <header>
+            <h1>Sklep z wyposażeniem</h1>
+            <section class="kwota">
+                <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
+            </section>
+            <section class="user-info">
+                <span id="userName">Użytkownik</span>
+                <button id="logoutBtn">Wyloguj</button>
+            </section>
+        </header>
+
+        <nav class="navigation">
+            <a href="main.html" class="nav-guzik">Wyścigi</a>
+            <a href="shop.html" class="nav-guzik active">Sklep</a>
+            <a href="inventory.html" class="nav-guzik">Mój Chomik</a>
+        </nav>
+
+        <section class="sklep_div">
+            <section class="sklep_uklad" id="sklepUklad"></section>
         </section>
-    </header>
 
-    <nav class="navigation">
-        <a href="main.html" class="nav-guzik">Wyścigi</a>
-        <a href="shop.html" class="nav-guzik active">Sklep</a>
-        <a href="inventory.html" class="nav-guzik">Mój Chomik</a>
-    </nav>
-
-    <section class="sklep_div">
-        <section class="sklep_uklad" id="sklepUklad"></section>
     </section>
 
-</section>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

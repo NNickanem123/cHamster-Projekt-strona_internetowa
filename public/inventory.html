@@ -1,46 +1,63 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mój Chomik</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<section class="main">
+    <section class="main">
 
-    <header>
-        <h1>Mój Chomik</h1>
-        <section class="kwota">
-            <p id="kwota_kwota"> Saldo: 1000 zł</p>
+        <header>
+            <h1>Mój Chomik</h1>
+            <section class="kwota">
+                <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
+            </section>
+            <section class="user-info">
+                <span id="userName">Użytkownik</span>
+                <button id="logoutBtn">Wyloguj</button>
+            </section>
+        </header>
+
+        <nav class="navigation">
+            <a href="main.html" class="nav-guzik">Wyścigi</a>
+            <a href="shop.html" class="nav-guzik">Sklep</a>
+            <a href="inventory.html" class="nav-guzik active">Mój Chomik</a>
+        </nav>
+
+        <section class="chomik_edycja_div">
+            <section class="podglad_div">
+                <h3>Podgląd</h3>
+                <canvas id="chomik_Podglad" width="200" height="200"></canvas>
+                <!-- tutaj podglad chomika damy-->
+                <label for="uzyjChomika">
+                    <input type="checkbox" id="uzyjChomika" checked>
+                    Użyj mojego chomika w wyścigach
+                </label>
+            </section>
+
+            <section class="skorki_div">
+                <h3>Moje Skiny</h3>
+                <section id="posiadane_skiny">
+                    <!-- Zakupione Skiny -->
+                </section>
+
+                <section class="warstwy_skiny">
+                    <h4>Aktywne warstwy</h4>
+                    <section id="wybrane_skiny">
+                        <p class="brak">Brak aktywnych skórek</p>
+                    </section>
+                </section>
+            </section>
         </section>
-    </header>
 
-    <nav class="navigation">
-        <a href="main.html" class="nav-guzik">Wyścigi</a>
-        <a href="shop.html" class="nav-guzik">Sklep</a>
-        <a href="inventory.html" class="nav-guzik active">Mój Chomik</a>
-    </nav>
-
-    <section class="chomik_edycja_div">
-        <section class="podglad_div">
-            <canvas id="chomik_Podglad" width="200" height="200"></canvas>
-            <!-- tutaj podglad chomika damy-->
-            <label>
-                <input type="checkbox" id="uzyjChomika" checked>
-                <label for="uzyjChomika">Użyj mojego chomika w wyścigach</label>
-            </label>
-        </section>
-
-        <section class="skorki_div">
-            <section id="posiadane_skiny"></section>
-            <section id="wybrane_skiny"></section>
-        </section>
     </section>
 
-</section>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
