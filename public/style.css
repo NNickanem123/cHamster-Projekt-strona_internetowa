@@ -5,58 +5,103 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
     color: #333;
     padding: 10px;
 }
 
 .main {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    background: white;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
     padding: 15px;
-    box-shadow: 0 2px 2px #ddd;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     margin-bottom: 15px;
-    border-bottom: 2px solid #ddd;
 }
 
-.header-right {
-    display: flex;
-    gap: 15px;
-    align-items: center;
+.btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
 }
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #5a6268;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-small {
+    padding: 8px 12px;
+    font-size: 0.85em;
+    min-height: 36px;
+}
+
+header h1{
+    font-size: 1.6em;
+    color: #764ba2;
+}
+
 
 .kwota {
     font-weight: bold;
-    color: darkgreen;
-    font-size: large;
+    color: #28a745;
+    font-size: 1.2em;
+}
+
+.user-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .navigation {
     display: flex;
-    gap: 5px;
+    gap: 10px;
     margin-bottom: 15px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .nav-guzik {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
     text-decoration: none;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    background: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: small;
+    background: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
 .nav-guzik:hover {
@@ -64,176 +109,199 @@ header {
 }
 
 .nav-guzik.active {
-    text-decoration: none;
-    background: #4a6baf;
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
-    border-color: #4a6baf;
 }
 
 .gra {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 15px;
-    margin-bottom: 15px;
 }
 
-.obstawianie_panel {
+.obstawianie_panel,
+.tor_wyscigowy_div,
+.wyniki_div,
+.sklep_div,
+.chomik_edycja_div {
+    background: white;
     padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
 
-.obstawianie h2 {
-    margin-bottom: 15px;
+.obstawianie_panel h2,
+.tor_wyscigowy_div h2,
+.wyniki_div h2,
+.sklep_div h2,
+.chomik_edycja_div h2 {
+    margin-bottom: 10px;
+    color: #764ba2;
 }
 
 .wybor_chomikow {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     margin-bottom: 15px;
 }
 
 .chomik-opcja {
+    background: #f8f9fa;
+    border: 2px solid transparent;
+    border-radius: 10px;
     padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
     text-align: center;
     cursor: pointer;
-    background: white;
+    transition: 0.3s;
 }
 
 .chomik-opcja:hover {
-    border-color: #4a6baf;
+    border-color: #667eea;
+    transform: translateY(-2px);
 }
 
 .chomik-opcja.selected {
-    border-color: green;
-    background: #e8f5e9;
+    border-color: #28a745;
+    background: #d4edda;
 }
 
 .kula {
-    width: 60px;
-    height: 60px;
+     width: 70px;
+    height: 70px;
     border-radius: 50%;
+    margin: 0 auto 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.kula-czerw { background: red; }
-.kula-nieb { background: blue; }
-.kula-ziel { background: green; }
-.kula-czar { background: black; }
-.kula-custom { background: orange; }
+.kula-czerw { background: linear-gradient(135deg, #ff6b6b, #ee5a6f); }
+.kula-nieb { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+.kula-ziel { background: linear-gradient(135deg, #95e1d3, #6bcf7f); }
+.kula-czar { background: linear-gradient(135deg, #2c3e50, #34495e); }
+.kula-custom { background: linear-gradient(135deg, #f39c12, #e67e22); }
 
-.hamster-img {
-    width: 40px;
-    height: 40px;
+.chomik-ikona {
+    width: 45px;
+    height: 45px;
 }
 
 .kwota_obstawiona {
     width: 100%;
-    padding: 6px;
-    border: 1px solid #ddd;
+    padding: 8px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
     text-align: center;
     margin-top: 5px;
 }
 
-.tor_wyscigowy_div {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background: #f9f9f9;
-}
-
-.tor_wyscigowy_div h2 {
-    margin-bottom: 10px;
+.kwota_obstawiona:focus {
+    border-color: #667eea;
+    outline: none;
 }
 
 #tor {
     width: 100%;
-    height: 300px;
-    border: 2px solid #ddd;
-    background: rgb(11, 153, 11);
-    border-radius: 4px;
-    display: block;
+    height: 320px;
+    border-radius: 10px;
+    border: 2px solid #333;
+    background: #2d5016;
 }
 
 .wyniki_div {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background: #f9f9f9;
     margin-top: 15px;
-}
-
-.wyniki_div-panel h2 {
-    margin-bottom: 10px;
-
-}
-
-
-.sklep_div {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background: #f9f9f9;
-}
-
-.sklep_div h2 {
-    margin-bottom: 10px;
 }
 
 .sklep_uklad {
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 15px;
 }
 
 .chomik_edycja_div {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background: #f9f9f9;
+    display: grid;
+    gap: 15px;
 }
 
-.chomik_edycja_div h2 {
-    margin-bottom: 10px;
-}
 .podglad_div {
+    background: #f8f9fa;
     padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    border-radius: 10px;
+}
+
+.skorki_div {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-zawartosc {
     background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
 }
 
-.podglad_div h3 {
-    margin-bottom: 10px;
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
 }
 
-.skorki_div h3 {
-    margin-bottom: 10px;
+.login-form input {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
 }
 
-.chomik-ikona {
-    height: 40px;
-    width: 40px;
+.login-form input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.login-info {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 10px;
 }
 
 @media (max-width: 768px) {
     .gra {
         grid-template-columns: 1fr;
     }
+
     .wybor_chomikow {
         grid-template-columns: 1fr;
     }
-    
-    .sklep_uklad {
-        grid-template-columns: repeat(2, 1fr);
+
+    .navigation {
+        flex-direction: column;
     }
-    
-    .posiadane_skiny {
-        grid-template-columns: repeat(3, 1fr);
+
+    .kula {
+        width: 60px;
+        height: 60px;
     }
 }

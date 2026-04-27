@@ -13,12 +13,12 @@
     <section class="main">
         <header>
             <h1>Wyścigi Chomików</h1>
-            <section class="kwota">
-                <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
-            </section>
             <section class="user-info">
                 <span id="userName">Użytkownik</span>
-                <button id="logoutBtn">Wyloguj</button>
+                <button id="logoutBtn" class="btn btn-small">Wyloguj</button>
+            </section>
+            <section class="kwota">
+                <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
             </section>
         </header>
 
@@ -34,12 +34,12 @@
 
                 <section class="wybor_chomikow">
 
-                    <section class="chomik-opcja"  data-hamster="0">
+                    <section class="chomik-opcja" data-hamster="0">
                         <section class="kula kula-czerw">
                             <img src="../assets/images/czerwony_homik.png" class="chomik-ikona">
                         </section>
                         <p>Czerwony</p>
-                        <input type="number" class="kwota_obstawiona" min="1"  data-hamster="0">
+                        <input type="number" class="kwota_obstawiona" min="1" data-hamster="0">
                     </section>
 
                     <section class="chomik-opcja" data-hamster="1">
@@ -66,7 +66,7 @@
                         <input type="number" class="kwota_obstawiona" min="1" data-hamster="3">
                     </section>
 
-                   <section class="chomik-opcja" id="myHamsterOption" style="display: none;" data-hamster="4"></section>
+                    <section class="chomik-opcja" id="myHamsterOption" style="display: none;" data-hamster="4">
                         <section class="kula kula-custom">
                             <canvas id="myHamsterPreview" width="50" height="50"></canvas>
                         </section>
@@ -76,8 +76,8 @@
 
                 </section>
 
-                <button id="start_pusty">Zacznij wyścig</button>
-                <button id="reset_pusty">Reset</button>
+                <button id="start_pusty" class="btn btn-primary">Zacznij wyścig</button>
+                <button id="reset_pusty" class="btn btn-secondary">Reset</button>
             </section>
 
             <section class="tor_wyscigowy_div">
