@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sklep – Wyścigi Chomików</title>
+    <title>Wyścigi Chomików</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,12 +13,16 @@
     <section class="main">
         <header>
             <h1>Wyścigi Chomików</h1>
-            <section class="user-info">
-                <span id="userName">Użytkownik</span>
-                <button id="logoutBtn" class="btn btn-primary">Wyloguj</button>
-            </section>
-            <section class="kwota">
-                <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
+
+            <section class="user-panel">
+                <section class="user-info">
+                    <span id="userName">Użytkownik</span>
+                    <button id="logoutBtn" class="btn btn-primary">Wyloguj</button>
+                </section>
+
+                <section class="kwota">
+                    <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
+                </section>
             </section>
         </header>
 
@@ -29,7 +33,11 @@
         </nav>
 
         <section class="sklep_div">
-            <section class="sklep_uklad" id="sklepUklad"></section>
+            <section class="sklep-kontener">
+            <h2>Sklep ze Skinami</h2>
+            <section class="sklep_uklad" id="sklepUklad">
+            </section>
+            </section>
         </section>
 
     </section>

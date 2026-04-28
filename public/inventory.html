@@ -14,12 +14,16 @@
 
         <header>
             <h1>Wyścigi Chomików</h1>
-            <section class="user-info">
-                <span id="userName">Użytkownik</span>
-                <button id="logoutBtn" class="btn btn-primary">Wyloguj</button>
-            </section>
-            <section class="kwota">
-                <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
+
+            <section class="user-panel">
+                <section class="user-info">
+                    <span id="userName">Użytkownik</span>
+                    <button id="logoutBtn" class="btn btn-primary">Wyloguj</button>
+                </section>
+
+                <section class="kwota">
+                    <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
+                </section>
             </section>
         </header>
 
@@ -31,18 +35,28 @@
 
         <section class="chomik_edycja_div">
             <section class="podglad_div">
-                <h3>Podgląd</h3>
-                <canvas id="chomik_Podglad" width="200" height="200"></canvas>
-                <!-- tutaj podglad chomika damy-->
-                <label for="uzyjChomika">
-                    <input type="checkbox" id="uzyjChomika" checked>
-                    Użyj mojego chomika w wyścigach
-                </label>
+                <section class="hamster-editor">
+                    <h2>🐹 Mój Chomik</h2>
+                    <section class="editor-layout">
+                        <section class="preview-section">
+                            <h3>Podgląd</h3>
+                            <section class="hamster-preview-large">
+                                <canvas id="chomik_Podglad" width="200" height="200"></canvas>
+                            </section>
+                            <section class="preview-controls">
+                                <label for="uzyjChomika">
+                                    <input type="checkbox" id="uzyjChomika" checked>
+                                    Użyj mojego chomika w wyścigach
+                                </label>
+                            </section>
+                        </section>
+                    </section>
+                </section>
             </section>
 
             <section class="skorki_div">
                 <h3>Moje Skiny</h3>
-                <section id="posiadane_skiny">
+                <section id="posiadane_skiny" class="owned-skins">
                     <!-- Zakupione Skiny -->
                 </section>
 
