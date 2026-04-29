@@ -571,6 +571,30 @@ header h1{
   background: #1e1e1e;
 }
 
+.tryb_nocny .btn-primary {
+  background: linear-gradient(135deg, #3a3a3a, #1f1f1f);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.tryb_nocny .btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #505050, #2a2a2a);
+}
+
+.tryb_nocny .btn-secondary {
+  background: #444;
+  color: #fff;
+}
+
+.tryb_nocny .btn-secondary:hover:not(:disabled) {
+  background: #555;
+}
+
+.tryb_nocny .btn-small {
+  background: #333;
+  color: #eee;
+}
+
 .tryb_nocny header,
 .tryb_nocny .navigation,
 .tryb_nocny .obstawianie_panel,
@@ -582,6 +606,85 @@ header h1{
   color: #eee;
 }
 
+.tryb_nocny .chomik-opcja {
+  background: #2a2a2a;
+  border: 2px solid transparent;
+  color: #eee;
+}
+
+.tryb_nocny .chomik-opcja:hover {
+  border-color: #888;
+  background: #333;
+}
+
+.tryb_nocny .chomik-opcja.selected {
+  border-color: #28a745;
+  background: #1e3a2a;
+}
+
+.tryb_nocny .sklep-kontener {
+  background: #1e1e1e;
+  color: #eee;
+}
+
+.tryb_nocny .sklep_uklad {
+  background: transparent; /* siatka może zostać przezroczysta */
+}
+
+.tryb_nocny .chomik_edycja_div {
+  background: #1e1e1e;
+}
+.tryb_nocny .podglad_div {
+  background: #2a2a2a;
+}
+
+.tryb_nocny .hamster-editor {
+  background: #2a2a2a;
+}
+
+.tryb_nocny .preview-section {
+  background: #1f1f1f;
+}
+
+.tryb_nocny .hamster-preview-large {
+  background: #111;
+}
+.tryb_nocny .skorki_div {
+  background: #2a2a2a;
+}
+
+.tryb_nocny .owned-skin-item {
+  background: #1f1f1f;
+  color: #eee;
+}
+
+.tryb_nocny .owned-skin-item.active {
+  background: #1e3a2a;
+}
+.tryb_nocny .warstwy_skiny {
+  background: #1f1f1f;
+}
+
+.tryb_nocny #wybrane_skiny {
+  background: transparent;
+}
+
+.tryb_nocny .wybrane_skiny-item {
+  background: #2a2a2a;
+  color: #eee;
+  border-color: #444;
+}
+
+.tryb_nocny h2,
+.tryb_nocny h3,
+.tryb_nocny h4 {
+  color: #ddd;
+}
+
+.tryb_nocny .modal-zawartosc h2 {
+  color: #333;
+}
+/*
 @media (max-width: 768px) {
     .gra {
         grid-template-columns: 1fr;
@@ -600,3 +703,5 @@ header h1{
         height: 60px;
     }
 }
+
+*/
