@@ -10,7 +10,7 @@
 
 <body>
 
-    <section class="main">
+    <section class="main" id="mainContainer">
         <header>
             <h1>Wyścigi Chomików</h1>
             <section class="user-panel">
@@ -24,6 +24,7 @@
 
                 <section class="kwota">
                     <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
+                    <span id="balance" style="display:none;">1000</span>
                 </section>
             </section>
         </header>
@@ -41,50 +42,50 @@
 
                 <section class="wybor_chomikow">
 
-                    <section class="chomik-opcja" data-hamster="0">
+                    <section class="chomik-opcja hamster-option" data-hamster="0">
                         <section class="kula kula-czerw">
                             <img src="../assets/images/czerwony_homik.png" class="chomik-ikona">
                         </section>
                         <p>Czerwony</p>
-                        <input type="number" class="kwota_obstawiona" min="1" data-hamster="0" placeholder="Kwota">
+                        <input type="number" class="kwota_obstawiona bet-amount" min="1" data-hamster="0" placeholder="Kwota">
                     </section>
 
-                    <section class="chomik-opcja" data-hamster="1">
+                    <section class="chomik-opcja hamster-option" data-hamster="1">
                         <section class="kula kula-nieb">
                             <img src="../assets/images/niebieski_homik.png" class="chomik-ikona">
                         </section>
                         <p>Niebieski</p>
-                        <input type="number" class="kwota_obstawiona" min="1" data-hamster="1" placeholder="Kwota">
+                        <input type="number" class="kwota_obstawiona bet-amount" min="1" data-hamster="1" placeholder="Kwota">
                     </section>
 
-                    <section class="chomik-opcja" data-hamster="2">
+                    <section class="chomik-opcja hamster-option" data-hamster="2">
                         <section class="kula kula-ziel">
                             <img src="../assets/images/zielony_homik.png" class="chomik-ikona">
                         </section>
                         <p>Zielony</p>
-                        <input type="number" class="kwota_obstawiona" min="1" data-hamster="2" placeholder="Kwota">
+                        <input type="number" class="kwota_obstawiona bet-amount" min="1" data-hamster="2" placeholder="Kwota">
                     </section>
 
-                    <section class="chomik-opcja" data-hamster="3">
+                    <section class="chomik-opcja hamster-option" data-hamster="3">
                         <section class="kula kula-czar">
                             <img src="../assets/images/czarny_homik.png" class="chomik-ikona">
                         </section>
                         <p>Czarny</p>
-                        <input type="number" class="kwota_obstawiona" min="1" data-hamster="3" placeholder="Kwota">
+                        <input type="number" class="kwota_obstawiona bet-amount" min="1" data-hamster="3" placeholder="Kwota">
                     </section>
 
-                    <section class="chomik-opcja" id="myHamsterOption" style="display: none;" data-hamster="4">
+                    <section class="chomik-opcja hamster-option" id="myHamsterOption" style="display: none;" data-hamster="4">
                         <section class="kula kula-custom">
                             <canvas id="myHamsterPreview" width="50" height="50"></canvas>
                         </section>
                         <p>Własny chomik</p>
-                        <input type="number" class="kwota_obstawiona" min="1" data-hamster="4" placeholder="Kwota">
+                        <input type="number" class="kwota_obstawiona bet-amount" min="1" data-hamster="4" placeholder="Kwota">
                     </section>
 
                 </section>
 
-                <button id="start_pusty" class="btn btn-primary">Zacznij wyścig</button>
-                <button id="reset_pusty" class="btn btn-secondary">Reset</button>
+                <button id="startRace" class="btn btn-primary">Zacznij wyścig</button>
+                <button id="resetRace" class="btn btn-secondary">Reset</button>
             </section>
 
             <section class="tor_wyscigowy_div">
@@ -99,14 +100,40 @@
                         Tor z zakrętami
                     </label>
                 </section>
-                <canvas id="tor" width="800" height="400"></canvas>
-                <section id="status_wyscigu"></section>
+                <canvas id="raceTrack" width="800" height="400"></canvas>
+                <section id="raceStatus"></section>
             </section>
         </section>
 
         <section class="wyniki_div">
             <h2>Wyniki</h2>
-            <section id="wyniki"></section>
+            <section id="results"></section>
+        </section>
+
+        <section class="wyniki_div gry_dodatkowe">
+            <h2>Inne gry z chomikami</h2>
+            <section class="mini-games-grid">
+                <section class="mini-game-card">
+                    <h3>Sloty chomików</h3>
+                    <p>Zagraj za stawkę i traf 3 takie same chomiki.</p>
+                    <input type="number" id="slotsBet" min="1" placeholder="Stawka">
+                    <button id="playSlots" class="btn btn-primary">Zakreć slotami</button>
+                    <section id="slotsReels" class="slots-reels">🐹 | 🐭 | 🐰</section>
+                    <section id="slotsResult"></section>
+                </section>
+
+                <section class="mini-game-card">
+                    <h3>Zgadnij kubeczek</h3>
+                    <p>Wybierz kubeczek, pod którym ukrył się chomik.</p>
+                    <input type="number" id="cupsBet" min="1" placeholder="Stawka">
+                    <section class="cups-buttons">
+                        <button class="btn btn-secondary cup-choice" data-cup="0">Kubek 1</button>
+                        <button class="btn btn-secondary cup-choice" data-cup="1">Kubek 2</button>
+                        <button class="btn btn-secondary cup-choice" data-cup="2">Kubek 3</button>
+                    </section>
+                    <section id="cupsResult"></section>
+                </section>
+            </section>
         </section>
 
     </section>

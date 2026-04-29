@@ -10,7 +10,7 @@
 
 <body>
 
-    <section class="main">
+    <section class="main" id="mainContainer">
 
         <header>
             <h1>Wyścigi Chomików</h1>
@@ -25,6 +25,7 @@
 
                 <section class="kwota">
                     <p>Saldo: <span id="kwota_kwota">1000</span> zł</p>
+                    <span id="balance" style="display:none;">1000</span>
                 </section>
             </section>
         </header>
@@ -43,11 +44,11 @@
                         <section class="preview-section">
                             <h3>Podgląd</h3>
                             <section class="hamster-preview-large">
-                                <canvas id="chomik_Podglad" width="200" height="200"></canvas>
+                                <canvas id="hamsterPreview" width="200" height="200"></canvas>
                             </section>
                             <section class="preview-controls">
-                                <label for="uzyjChomika">
-                                    <input type="checkbox" id="uzyjChomika" checked>
+                                <label for="useMyHamster">
+                                    <input type="checkbox" id="useMyHamster" checked>
                                     Użyj mojego chomika w wyścigach
                                 </label>
                             </section>
@@ -58,13 +59,13 @@
 
             <section class="skorki_div">
                 <h3>Moje Skiny</h3>
-                <section id="posiadane_skiny" class="owned-skins">
+                <section id="ownedSkins" class="owned-skins">
                     <!-- Zakupione Skiny -->
                 </section>
 
                 <section class="warstwy_skiny">
                     <h4>Aktywne warstwy</h4>
-                    <section id="wybrane_skiny">
+                    <section id="activeLayers">
                         <p class="brak">Brak aktywnych skórek</p>
                     </section>
                 </section>
