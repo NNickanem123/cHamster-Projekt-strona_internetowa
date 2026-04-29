@@ -327,8 +327,12 @@ function switchTab(tabName) {
 // Aktualizuj UI
 function updateUI() {
     if (!currentUser) return;
-    
-    document.getElementById('userName').textContent = currentUser;
+
+    const userNameElement = document.getElementById('userName');
+    if (userNameElement) {
+        userNameElement.textContent = currentUser;
+    }
+
     updateBalance();
     updateShop();
     updateHamsterEditor();
