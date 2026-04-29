@@ -36,6 +36,12 @@
             <a href="inventory.html" class="nav-guzik">Mój Chomik</a>
         </nav>
 
+        <section class="home-mode-menu">
+            <button class="btn btn-primary home-mode-btn active" data-home-view="race">Wyścigi</button>
+            <button class="btn btn-secondary home-mode-btn" data-home-view="casino">Kasyno</button>
+        </section>
+
+        <section class="home-view-panel active" data-home-panel="race">
         <section class="gra">
             <section class="obstawianie_panel">
                 <h2>Obstaw wyścig</h2>
@@ -99,6 +105,14 @@
                         <input type="radio" name="trackType" value="curved">
                         Tor z zakrętami
                     </label>
+                    <label>
+                        <input type="radio" name="trackType" value="sprint">
+                        Sprint Neon
+                    </label>
+                    <label>
+                        <input type="radio" name="trackType" value="desert">
+                        Pustynny Tor
+                    </label>
                 </section>
                 <canvas id="raceTrack" width="800" height="400"></canvas>
                 <section id="raceStatus"></section>
@@ -109,20 +123,46 @@
             <h2>Wyniki</h2>
             <section id="results"></section>
         </section>
+        </section>
 
-        <section class="wyniki_div gry_dodatkowe">
+        <section class="wyniki_div gry_dodatkowe home-view-panel" data-home-panel="casino">
             <h2>Inne gry z chomikami</h2>
+            <section class="casino-menu">
+                <button class="btn btn-secondary casino-game-btn active" data-game="slotClassic">Slot Classic</button>
+                <button class="btn btn-secondary casino-game-btn" data-game="slotTurbo">Slot Turbo</button>
+                <button class="btn btn-secondary casino-game-btn" data-game="slotMega">Slot Mega</button>
+                <button class="btn btn-secondary casino-game-btn" data-game="cups">Kubeczki</button>
+            </section>
+
             <section class="mini-games-grid">
-                <section class="mini-game-card">
-                    <h3>Sloty chomików</h3>
-                    <p>Zagraj za stawkę i traf 3 takie same chomiki.</p>
-                    <input type="number" id="slotsBet" min="1" placeholder="Stawka">
-                    <button id="playSlots" class="btn btn-primary">Zakreć slotami</button>
-                    <section id="slotsReels" class="slots-reels">🐹 | 🐭 | 🐰</section>
-                    <section id="slotsResult"></section>
+                <section class="mini-game-card casino-game-panel active" data-game-panel="slotClassic">
+                    <h3>Slot Classic (3 bębny)</h3>
+                    <p>3 takie same = x5, 2 takie same = x2.</p>
+                    <input type="number" id="slotsClassicBet" min="1" placeholder="Stawka">
+                    <button id="playSlotsClassic" class="btn btn-primary">Zakreć Classic</button>
+                    <section id="slotsClassicReels" class="slots-reels">🐹 | 🐭 | 🐰</section>
+                    <section id="slotsClassicResult"></section>
                 </section>
 
-                <section class="mini-game-card">
+                <section class="mini-game-card casino-game-panel" data-game-panel="slotTurbo">
+                    <h3>Slot Turbo (4 bębny)</h3>
+                    <p>4 takie same = x12, 3 takie same = x5, 2 takie same = x2.</p>
+                    <input type="number" id="slotsTurboBet" min="1" placeholder="Stawka">
+                    <button id="playSlotsTurbo" class="btn btn-primary">Zakreć Turbo</button>
+                    <section id="slotsTurboReels" class="slots-reels">⭐ | 🧀 | 🐹 | 🐭</section>
+                    <section id="slotsTurboResult"></section>
+                </section>
+
+                <section class="mini-game-card casino-game-panel" data-game-panel="slotMega">
+                    <h3>Slot Mega (5 bębnów)</h3>
+                    <p>5 takich samych = x30, 4 = x12, 3 = x5. Symbol ⭐ daje jackpot x50.</p>
+                    <input type="number" id="slotsMegaBet" min="1" placeholder="Stawka">
+                    <button id="playSlotsMega" class="btn btn-primary">Zakreć Mega</button>
+                    <section id="slotsMegaReels" class="slots-reels">🐹 | ⭐ | 🧀 | 🐰 | 🐭</section>
+                    <section id="slotsMegaResult"></section>
+                </section>
+
+                <section class="mini-game-card casino-game-panel" data-game-panel="cups">
                     <h3>Zgadnij kubeczek</h3>
                     <p>Wybierz kubeczek, pod którym ukrył się chomik.</p>
                     <input type="number" id="cupsBet" min="1" placeholder="Stawka">

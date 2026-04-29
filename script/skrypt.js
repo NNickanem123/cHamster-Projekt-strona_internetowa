@@ -12,17 +12,17 @@ if (localStorage.getItem("tryb_nocny") === "on") {
     }
   }
 
-// Stan gry
 let currentUser = null;
 let balance = 1000;
 let bets = {};
 let raceInProgress = false;
 let raceResults = [];
-let blackHamsterBoost = 0; // Licznik rund do następnego boosta czarnego chomika
-let activeSkins = []; // Aktywne skiny użytkownika
-let useMyHamster = false; // Czy używać własnego chomika w wyścigach
+let blackHamsterBoost = 0; 
+let activeSkins = []; 
+let useMyHamster = false; 
+const IMAGE_BASE_PATH = '../assets/images/';
 
-// Kolory chomików
+
 const hamsterColors = [
     { name: 'Czerwony', color: '#ff6b6b', class: 'ball-red' },
     { name: 'Niebieski', color: '#4ecdc4', class: 'ball-blue' },
@@ -31,7 +31,7 @@ const hamsterColors = [
     { name: 'Mój Chomik', color: '#f39c12', class: 'ball-custom' }
 ];
 
-// Dostępne skiny w sklepie
+
 const availableSkins = [
     { id: 'wings', name: 'Skrzydła', price: 200, image: 'skrzydła.png', layer: 'overlay' },
     { id: 'crown', name: 'Korona', price: 300, image: 'korona.png', layer: 'overlay' },
@@ -41,19 +41,18 @@ const availableSkins = [
     { id: 'halo', name: 'Aureola', price: 400, image: 'aureola.png', layer: 'overlay' }
 ];
 
-// Mapowanie zawodników na grafiki
 const hamsterImages = {
-    0: 'modele homikó/czerwony homik.png',
-    1: 'modele homikó/niebieski homik.png',
-    2: 'modele homikó/zielony homik.png',
-    3: 'modele homikó/czarny homik.png',
-    4: 'modele homikó/homik.png' // Własny chomik - podstawowy
+    0: `${IMAGE_BASE_PATH}czerwony_homik.png`,
+    1: `${IMAGE_BASE_PATH}niebieski_homik.png`,
+    2: `${IMAGE_BASE_PATH}zielony_homik.png`,
+    3: `${IMAGE_BASE_PATH}czarny_homik.png`,
+    4: `${IMAGE_BASE_PATH}homik.png`
 };
 
-// Cache obrazów
+
 const imageCache = {};
 
-// Funkcja do ładowania obrazu do cache
+
 function loadImage(src) {
     if (imageCache[src]) {
         return imageCache[src];
@@ -64,22 +63,26 @@ function loadImage(src) {
     return img;
 }
 
-// Wstępne ładowanie wszystkich obrazów
+function isImageReady(img) {
+    return !!(img && img.complete && img.naturalWidth > 0 && img.naturalHeight > 0);
+}
+
+
 function preloadImages() {
-    // Załaduj grafiki zawodników
+
     Object.values(hamsterImages).forEach(src => {
         loadImage(src);
     });
     
-    // Załaduj grafiki skórek
+
     availableSkins.forEach(skin => {
         if (skin.image) {
-            loadImage(`modele homikó/${skin.image}`);
+            loadImage(`${IMAGE_BASE_PATH}${skin.image}`);
         }
     });
 }
 
-// System kont
+
 function getUsers() {
     const users = localStorage.getItem('hamsterRaceUsers');
     return users ? JSON.parse(users) : {};
@@ -149,7 +152,7 @@ function logout() {
     }
 }
 
-// Inicjalizacja
+
 document.addEventListener('DOMContentLoaded', () => {
     const loginModal = document.getElementById('loginModal');
     const mainContainer = document.getElementById('mainContainer');
@@ -159,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const useMyHamsterCheckbox = document.getElementById('useMyHamster');
     const isLoginPage = window.location.pathname.includes('login.html');
 
-    // Sprawdź czy użytkownik jest zalogowany
+
     const savedUser = localStorage.getItem('currentUser');
     if (savedUser) {
         loadUser(savedUser);
@@ -175,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Logowanie
+
     const performLogin = () => {
         if (!usernameInput) return;
         const username = usernameInput.value.trim();
@@ -200,10 +203,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Wylogowanie
+
     if (logoutBtn) logoutBtn.addEventListener('click', logout);
+
+    const homeModeButtons = document.querySelectorAll('.home-mode-btn');
+    const homePanels = document.querySelectorAll('.home-view-panel');
+    const showHomePanel = (panelName) => {
+        homeModeButtons.forEach((btn) => {
+            const isActive = btn.dataset.homeView === panelName;
+            btn.classList.toggle('active', isActive);
+            btn.classList.toggle('btn-primary', isActive);
+            btn.classList.toggle('btn-secondary', !isActive);
+        });
+        homePanels.forEach((panel) => {
+            panel.classList.toggle('active', panel.dataset.homePanel === panelName);
+        });
+    };
+    if (homeModeButtons.length > 0 && homePanels.length > 0) {
+        homeModeButtons.forEach((btn) => {
+            btn.addEventListener('click', () => showHomePanel(btn.dataset.homeView));
+        });
+        showHomePanel('race');
+    }
     
-    // Nawigacja między zakładkami
+
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const tab = btn.dataset.tab;
@@ -211,10 +234,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Event listeners dla wyścigów
+
     const canvas = document.getElementById('raceTrack');
     if (canvas) {
-        // Dostosuj rozmiar canvas do ekranu mobilnego
+
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
         
@@ -223,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('startRace').addEventListener('click', startRace);
         document.getElementById('resetRace').addEventListener('click', resetRace);
         
-        // Wybór chomika
+
         document.querySelectorAll('.hamster-option').forEach(option => {
             option.addEventListener('click', () => {
                 if (!raceInProgress) {
@@ -232,10 +255,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         
-        // Rysuj początkowy tor
+
         drawTrack(ctx, canvas, 'straight');
         
-        // Zmiana typu toru
+
         document.querySelectorAll('input[name="trackType"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
                 if (!raceInProgress) {
@@ -245,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Edytor chomika
+
     if (useMyHamsterCheckbox) {
         useMyHamsterCheckbox.addEventListener('change', (e) => {
             useMyHamster = e.target.checked;
@@ -254,19 +277,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Inicjalizuj sklep i edytor
+
     initShop();
     initHamsterEditor();
     updateMyHamsterOption();
     
-    // Wstępne ładowanie obrazów
+
     preloadImages();
 
-    // Dodatkowe minigry na stronie głównej
+
     initMiniGames();
 });
 
-// Dostosuj rozmiar canvas do ekranu
 function resizeCanvas() {
     const canvas = document.getElementById('raceTrack');
     if (!canvas) return;
@@ -274,7 +296,7 @@ function resizeCanvas() {
     const container = canvas.parentElement;
     if (!container) return;
     
-    const containerWidth = container.clientWidth - 30; // Odlicz padding
+    const containerWidth = container.clientWidth - 30;
     const maxWidth = 800;
     const maxHeight = 400;
     
@@ -282,16 +304,16 @@ function resizeCanvas() {
     const oldHeight = canvas.height;
     
     if (window.innerWidth <= 767) {
-        // Na urządzeniach mobilnych
+
         canvas.width = Math.min(containerWidth, maxWidth);
         canvas.height = Math.min((canvas.width / maxWidth) * maxHeight, 300);
     } else {
-        // Na większych ekranach
+
         canvas.width = Math.min(containerWidth, maxWidth);
         canvas.height = maxHeight;
     }
     
-    // Jeśli rozmiar się zmienił, przerysuj tor
+
     if (canvas.width !== oldWidth || canvas.height !== oldHeight) {
         const ctx = canvas.getContext('2d');
         const trackType = document.querySelector('input[name="trackType"]:checked')?.value || 'straight';
@@ -301,7 +323,7 @@ function resizeCanvas() {
     }
 }
 
-// Przełączanie zakładek
+
 function switchTab(tabName) {
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -324,7 +346,7 @@ function switchTab(tabName) {
     }
 }
 
-// Aktualizuj UI
+
 function updateUI() {
     if (!currentUser) return;
 
@@ -339,11 +361,10 @@ function updateUI() {
     updateMyHamsterOption();
 }
 
-// Aktualizuj opcję własnego chomika
 function updateMyHamsterOption() {
     const myHamsterOption = document.getElementById('myHamsterOption');
     if (myHamsterOption) {
-        if (useMyHamster && activeSkins.length > 0) {
+        if (useMyHamster) {
             myHamsterOption.style.display = 'block';
             updateMyHamsterPreview();
         } else {
@@ -352,7 +373,7 @@ function updateMyHamsterOption() {
     }
 }
 
-// Sklep
+
 function initShop() {
     updateShop();
 }
@@ -402,7 +423,7 @@ function updateShop() {
 function buySkin(skin) {
     if (!currentUser) return;
     
-    // Upewnij się, że balance jest liczbą
+
     balance = parseFloat(balance) || 0;
     
     if (balance < skin.price) {
@@ -425,16 +446,16 @@ function buySkin(skin) {
         return;
     }
     
-    // Odejmij cenę od salda
+
     balance = balance - skin.price;
-    balance = parseFloat(balance.toFixed(2)); // Zaokrąglij do 2 miejsc po przecinku
+    balance = parseFloat(balance.toFixed(2));
     
-    // Zapisz zakupiony skin
+
     userData.ownedSkins.push(skin.id);
     userData.balance = balance;
     saveUserData(currentUser, userData);
     
-    // Aktualizuj UI
+
     updateBalance();
     updateShop();
     updateHamsterEditor();
@@ -444,40 +465,22 @@ function buySkin(skin) {
 function drawSkinPreview(ctx, skin) {
     ctx.clearRect(0, 0, 100, 100);
     
-    // Rysuj podstawowego chomika
-    const baseImg = loadImage('modele homikó/homik.png');
-    if (baseImg.complete) {
+
+    const baseImg = loadImage(hamsterImages[4]);
+    if (isImageReady(baseImg)) {
         ctx.drawImage(baseImg, 25, 25, 50, 50);
-        
-        // Rysuj skin jeśli dostępny
-        if (skin.image) {
-            const skinImg = loadImage(`modele homikó/${skin.image}`);
-            if (skinImg.complete) {
-                ctx.drawImage(skinImg, 25, 25, 50, 50);
-            } else {
-                skinImg.onload = () => {
-                    ctx.drawImage(skinImg, 25, 25, 50, 50);
-                };
-            }
+    }
+
+
+    if (skin.image) {
+        const skinImg = loadImage(`${IMAGE_BASE_PATH}${skin.image}`);
+        if (isImageReady(skinImg)) {
+            ctx.drawImage(skinImg, 25, 25, 50, 50);
         }
-    } else {
-        baseImg.onload = () => {
-            ctx.drawImage(baseImg, 25, 25, 50, 50);
-            if (skin.image) {
-                const skinImg = loadImage(`modele homikó/${skin.image}`);
-                if (skinImg.complete) {
-                    ctx.drawImage(skinImg, 25, 25, 50, 50);
-                } else {
-                    skinImg.onload = () => {
-                        ctx.drawImage(skinImg, 25, 25, 50, 50);
-                    };
-                }
-            }
-        };
     }
 }
 
-// Edytor chomika
+
 function initHamsterEditor() {
     updateHamsterEditor();
 }
@@ -493,7 +496,7 @@ function updateHamsterEditor() {
     
     if (!ownedSkinsDiv || !activeLayersDiv) return;
     
-    // Pokaż zakupione skiny
+    
     ownedSkinsDiv.innerHTML = '';
     
     if (ownedSkins.length === 0) {
@@ -527,7 +530,7 @@ function updateHamsterEditor() {
         });
     }
     
-    // Pokaż aktywne warstwy
+
     activeLayersDiv.innerHTML = '';
     
     if (activeSkins.length === 0) {
@@ -596,81 +599,54 @@ function updateHamsterPreview() {
         return skin && skin.layer === 'overlay';
     });
     
-    // Funkcja sprawdzająca czy wszystkie obrazy są załadowane
-    const checkAllImagesLoaded = () => {
-        if (!baseImg.complete || baseImg.naturalWidth === 0) return false;
-        
-        for (const skinId of backSkins) {
-            const skin = availableSkins.find(s => s.id === skinId);
-            if (skin && skin.image) {
-                const skinImg = loadImage(`modele homikó/${skin.image}`);
-                if (!skinImg.complete || skinImg.naturalWidth === 0) return false;
-            }
-        }
-        
-        for (const skinId of overlaySkins) {
-            const skin = availableSkins.find(s => s.id === skinId);
-            if (skin && skin.image) {
-                const skinImg = loadImage(`modele homikó/${skin.image}`);
-                if (!skinImg.complete || skinImg.naturalWidth === 0) return false;
-            }
-        }
-        
-        return true;
-    };
-    
+
     const drawPreview = () => {
         ctx.clearRect(0, 0, 200, 200);
         
-        // WARSTWA 1: Rysuj podstawowego chomika - NAJPIERW (podstawa)
-        if (baseImg.complete && baseImg.naturalWidth > 0 && baseImg.naturalHeight > 0) {
+
+        if (isImageReady(baseImg)) {
             ctx.drawImage(baseImg, 50, 50, 100, 100);
         }
         
-        // WARSTWA 2: Rysuj skiny z tyłu (peleryna) - PO chomiku (NAD chomikiem)
+
         for (let i = 0; i < backSkins.length; i++) {
             const skinId = backSkins[i];
             const skin = availableSkins.find(s => s.id === skinId);
             if (skin && skin.image) {
-                const skinImg = loadImage(`modele homikó/${skin.image}`);
-                if (skinImg.complete && skinImg.naturalWidth > 0 && skinImg.naturalHeight > 0) {
+                const skinImg = loadImage(`${IMAGE_BASE_PATH}${skin.image}`);
+                if (isImageReady(skinImg)) {
                     ctx.drawImage(skinImg, 50, 50, 100, 100);
                 }
             }
         }
         
-        // WARSTWA 3: Rysuj skiny z przodu (okulary, czapka, korona itp.) - NA KOŃCU, NA SAMYM WIERZCHU
+
         for (let i = 0; i < overlaySkins.length; i++) {
             const skinId = overlaySkins[i];
             const skin = availableSkins.find(s => s.id === skinId);
             if (skin && skin.image) {
-                const skinImg = loadImage(`modele homikó/${skin.image}`);
-                if (skinImg.complete && skinImg.naturalWidth > 0 && skinImg.naturalHeight > 0) {
+                const skinImg = loadImage(`${IMAGE_BASE_PATH}${skin.image}`);
+                if (isImageReady(skinImg)) {
                     ctx.drawImage(skinImg, 50, 50, 100, 100);
                 }
             }
         }
     };
-    
-    // Czekaj na załadowanie wszystkich obrazów
-    if (checkAllImagesLoaded()) {
-        drawPreview();
-    } else {
-        // Czekaj na załadowanie podstawowego obrazu
-        const tryDraw = () => {
-            if (checkAllImagesLoaded()) {
-                drawPreview();
-            } else {
-                setTimeout(tryDraw, 50); // Spróbuj ponownie za 50ms
-            }
-        };
-        
-        if (baseImg.complete) {
-            tryDraw();
-        } else {
-            baseImg.onload = tryDraw;
-        }
+
+    drawPreview();
+
+
+    if (!isImageReady(baseImg)) {
+        baseImg.addEventListener('load', drawPreview, { once: true });
     }
+    [...backSkins, ...overlaySkins].forEach((skinId) => {
+        const skin = availableSkins.find(s => s.id === skinId);
+        if (!skin || !skin.image) return;
+        const skinImg = loadImage(`${IMAGE_BASE_PATH}${skin.image}`);
+        if (!isImageReady(skinImg)) {
+            skinImg.addEventListener('load', drawPreview, { once: true });
+        }
+    });
 }
 
 function updateMyHamsterPreview() {
@@ -696,73 +672,95 @@ function updateMyHamsterPreview() {
     const drawPreview = () => {
         ctx.clearRect(0, 0, 50, 50);
         
-        // WARSTWA 1: Rysuj podstawowego chomika - NAJPIERW (podstawa)
-        if (baseImg.complete && baseImg.naturalWidth > 0 && baseImg.naturalHeight > 0) {
+
+        if (isImageReady(baseImg)) {
             ctx.drawImage(baseImg, 0, 0, 50, 50);
         }
         
-        // WARSTWA 2: Rysuj skiny z tyłu (peleryna) - PO chomiku (NAD chomikiem)
+
         for (let i = 0; i < backSkins.length; i++) {
             const skinId = backSkins[i];
             const skin = availableSkins.find(s => s.id === skinId);
             if (skin && skin.image) {
-                const skinImg = loadImage(`modele homikó/${skin.image}`);
-                if (skinImg.complete && skinImg.naturalWidth > 0 && skinImg.naturalHeight > 0) {
+                const skinImg = loadImage(`${IMAGE_BASE_PATH}${skin.image}`);
+                if (isImageReady(skinImg)) {
                     ctx.drawImage(skinImg, 0, 0, 50, 50);
                 }
             }
         }
         
-        // WARSTWA 3: Rysuj skiny z przodu - NA KOŃCU, NA SAMYM WIERZCHU
+
         for (let i = 0; i < overlaySkins.length; i++) {
             const skinId = overlaySkins[i];
             const skin = availableSkins.find(s => s.id === skinId);
             if (skin && skin.image) {
-                const skinImg = loadImage(`modele homikó/${skin.image}`);
-                if (skinImg.complete && skinImg.naturalWidth > 0 && skinImg.naturalHeight > 0) {
+                const skinImg = loadImage(`${IMAGE_BASE_PATH}${skin.image}`);
+                if (isImageReady(skinImg)) {
                     ctx.drawImage(skinImg, 0, 0, 50, 50);
                 }
             }
         }
     };
-    
-    if (baseImg.complete && baseImg.naturalWidth > 0) {
-        drawPreview();
-    } else {
-        baseImg.onload = () => {
-            if (baseImg.naturalWidth > 0) {
-                drawPreview();
-            }
-        };
+
+    drawPreview();
+
+
+    if (!isImageReady(baseImg)) {
+        baseImg.addEventListener('load', drawPreview, { once: true });
     }
+    [...backSkins, ...overlaySkins].forEach((skinId) => {
+        const skin = availableSkins.find(s => s.id === skinId);
+        if (!skin || !skin.image) return;
+        const skinImg = loadImage(`${IMAGE_BASE_PATH}${skin.image}`);
+        if (!isImageReady(skinImg)) {
+            skinImg.addEventListener('load', drawPreview, { once: true });
+        }
+    });
 }
 
-// Rysowanie toru
 function drawTrack(ctx, canvas, trackType) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Tło trawy
-    ctx.fillStyle = '#2d5016';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Wzór trawy
-    ctx.fillStyle = '#3a6b1f';
-    for (let i = 0; i < canvas.width; i += 20) {
-        for (let j = 0; j < canvas.height; j += 20) {
-            if ((i + j) % 40 === 0) {
-                ctx.fillRect(i, j, 10, 10);
+
+    if (trackType === 'sprint') {
+        ctx.fillStyle = '#141b34';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = 'rgba(93, 173, 226, 0.35)';
+        for (let i = 0; i < canvas.width; i += 35) {
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, canvas.height);
+            ctx.stroke();
+        }
+    } else if (trackType === 'desert') {
+        ctx.fillStyle = '#d9b36f';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'rgba(181, 127, 54, 0.22)';
+        for (let i = 0; i < canvas.width; i += 45) {
+            ctx.fillRect(i, 0, 20, canvas.height);
+        }
+    } else {
+
+        ctx.fillStyle = '#2d5016';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#3a6b1f';
+        for (let i = 0; i < canvas.width; i += 20) {
+            for (let j = 0; j < canvas.height; j += 20) {
+                if ((i + j) % 40 === 0) {
+                    ctx.fillRect(i, j, 10, 10);
+                }
             }
         }
     }
-    
-    if (trackType === 'straight') {
+
+    if (trackType === 'straight' || trackType === 'sprint' || trackType === 'desert') {
         drawStraightTrack(ctx, canvas);
     } else {
         drawCurvedTrack(ctx, canvas);
     }
     
-    // Linia startu (tylko dla prostego toru)
-    if (trackType === 'straight') {
+
+    if (trackType === 'straight' || trackType === 'sprint' || trackType === 'desert') {
         const margin = window.innerWidth <= 767 ? 20 : 50;
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = window.innerWidth <= 767 ? 2 : 3;
@@ -773,7 +771,7 @@ function drawTrack(ctx, canvas, trackType) {
         ctx.stroke();
         ctx.setLineDash([]);
         
-        // Linia mety
+  
         ctx.strokeStyle = '#ffd700';
         ctx.lineWidth = window.innerWidth <= 767 ? 3 : 4;
         ctx.setLineDash([15, 5]);
@@ -786,7 +784,7 @@ function drawTrack(ctx, canvas, trackType) {
 }
 
 function drawStraightTrack(ctx, canvas) {
-    // Prosty tor - pasy
+
     const isMobile = window.innerWidth <= 767;
     const margin = isMobile ? 20 : 50;
     const laneWidth = (canvas.height - (margin * 2)) / 4;
@@ -805,29 +803,29 @@ function drawStraightTrack(ctx, canvas) {
 }
 
 function drawCurvedTrack(ctx, canvas) {
-    // Tor z zakrętami
+
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     
-    // Dostosuj margines i szerokość pasa do rozmiaru canvas
+
     const isMobile = window.innerWidth <= 767;
     const margin = isMobile ? 20 : 50;
     const radius = Math.min(canvas.width, canvas.height) / 2 - margin;
     
-    // Główny tor (okrągły)
+
     ctx.strokeStyle = '#ffffff';
     ctx.lineWidth = isMobile ? 3 : 4;
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
     ctx.stroke();
     
-    // Pasy toru
+
     const lanes = 4;
     const laneWidth = isMobile ? Math.max(15, radius / 5) : 30;
     
     for (let i = 1; i < lanes; i++) {
         const r = radius - (i * laneWidth);
-        if (r > 10) { // Upewnij się, że promień jest wystarczająco duży
+        if (r > 10) {
             ctx.strokeStyle = '#ffffff';
             ctx.lineWidth = isMobile ? 1.5 : 2;
             ctx.beginPath();
@@ -836,7 +834,7 @@ function drawCurvedTrack(ctx, canvas) {
         }
     }
     
-    // Linia startu/mety
+
     const lineLength = isMobile ? 15 : 20;
     ctx.strokeStyle = '#ffd700';
     ctx.lineWidth = isMobile ? 2 : 3;
@@ -846,11 +844,11 @@ function drawCurvedTrack(ctx, canvas) {
     ctx.stroke();
 }
 
-// Start wyścigu
+
 function startRace() {
     if (raceInProgress) return;
     
-    // Zbierz zakłady
+
     bets = {};
     let totalBet = 0;
     
@@ -878,55 +876,54 @@ function startRace() {
         return;
     }
     
-    // Odejmij zakłady od salda
+
     balance -= totalBet;
     updateBalance();
     
-    // Zablokuj przyciski
+
     raceInProgress = true;
     document.getElementById('startRace').disabled = true;
     document.querySelectorAll('.bet-amount').forEach(input => input.disabled = true);
     
-    // Rozpocznij wyścig
+
     runRace();
 }
 
-// Główna funkcja wyścigu
+
 function runRace() {
     const canvas = document.getElementById('raceTrack');
     const ctx = canvas.getContext('2d');
     const trackType = document.querySelector('input[name="trackType"]:checked').value;
     
-    // Pozycje chomików (5 jeśli używamy własnego chomika)
-    const numHamsters = useMyHamster && activeSkins.length > 0 ? 5 : 4;
+
+    const numHamsters = useMyHamster ? 5 : 4;
     const positions = new Array(numHamsters).fill(0);
     const speeds = [];
     
-    // Dla zakrętów - pełne okrążenie (360 stopni = 2π radianów)
-    // Dla prostego toru - odległość od startu do mety
+
     const isMobile = window.innerWidth <= 767;
     const margin = isMobile ? 20 : 50;
-    const finishLine = trackType === 'straight' 
+    const isLinearTrack = trackType === 'straight' || trackType === 'sprint' || trackType === 'desert';
+    const finishLine = isLinearTrack
         ? canvas.width - (margin * 2) 
-        : Math.PI * 2 * 100; // Dla zakrętów - pełne okrążenie w jednostkach kątowych
+        : Math.PI * 2 * 100;
     
-    // Losuj prędkości
+
     for (let i = 0; i < numHamsters; i++) {
-        let baseSpeed = Math.random() * 3 + 1; // Podstawowa prędkość 1-4
+        let baseSpeed = Math.random() * 3 + 1; 
         
-        // Specjalne właściwości czarnego chomika
-        if (i === 3) { // Czarny chomik
-            // 30% szansy na boost w każdej rundzie
-            // Lub co 3 rundy gwarantowany boost
+
+        if (i === 3) { 
+
             if (blackHamsterBoost === 0 || Math.random() < 0.3) {
-                baseSpeed *= 1.5; // 50% szybszy
-                blackHamsterBoost = 3; // Reset licznika
+                baseSpeed *= 1.5;
+                blackHamsterBoost = 3; 
             } else {
                 blackHamsterBoost--;
             }
         }
         
-        // Własny chomik ma mały bonus prędkości (10%)
+
         if (i === 4 && useMyHamster) {
             baseSpeed *= 1.1;
         }
@@ -934,18 +931,18 @@ function runRace() {
         speeds.push(baseSpeed);
     }
     
-    // Animacja wyścigu
+
     const raceInterval = setInterval(() => {
-        // Wyczyść i narysuj tor
+
         drawTrack(ctx, canvas, trackType);
         
-        // Aktualizuj pozycje
+
         let raceFinished = false;
         
         for (let i = 0; i < numHamsters; i++) {
-            positions[i] += speeds[i] * (0.5 + Math.random() * 0.5); // Dodaj losowość
+            positions[i] += speeds[i] * (0.5 + Math.random() * 0.5);
             
-            if (trackType === 'straight') {
+            if (isLinearTrack) {
                 if (positions[i] >= finishLine) {
                     positions[i] = finishLine;
                     raceFinished = true;
@@ -960,15 +957,15 @@ function runRace() {
             }
         }
         
-        // Sprawdź czy wyścig zakończony
+
         if (raceFinished) {
             clearInterval(raceInterval);
             finishRace(positions, speeds);
         }
-    }, 16); // ~60 FPS
+    }, 16); 
 }
 
-// Rysowanie chomika na prostym torze
+
 function drawHamsterStraight(ctx, canvas, hamsterIndex, position, numHamsters = 4) {
     const laneWidth = (canvas.height - 100) / numHamsters;
     const startY = 50;
@@ -977,7 +974,7 @@ function drawHamsterStraight(ctx, canvas, hamsterIndex, position, numHamsters = 
     
     const color = hamsterColors[hamsterIndex];
     
-    // Kula
+
     const gradient = ctx.createRadialGradient(x - 10, y - 10, 0, x, y, 40);
     if (hamsterIndex === 0) {
         gradient.addColorStop(0, '#ff8a8a');
@@ -1001,19 +998,19 @@ function drawHamsterStraight(ctx, canvas, hamsterIndex, position, numHamsters = 
     ctx.arc(x, y, 30, 0, Math.PI * 2);
     ctx.fill();
     
-    // Obramowanie dla czarnego
+
     if (hamsterIndex === 3) {
         ctx.strokeStyle = '#f39c12';
         ctx.lineWidth = 3;
         ctx.stroke();
     }
     
-    // Chomik - jeśli to własny chomik, rysuj z skinami
+
     if (hamsterIndex === 4 && useMyHamster) {
         drawCustomHamster(ctx, x, y, 30);
     } else {
-        // Standardowy chomik - użyj grafiki z cache
-        const imgSrc = hamsterImages[hamsterIndex] || 'modele homikó/homik.png';
+
+        const imgSrc = hamsterImages[hamsterIndex] || hamsterImages[4];
         const img = loadImage(imgSrc);
         if (img.complete) {
             ctx.drawImage(img, x - 30, y - 30, 60, 60);
@@ -1025,12 +1022,12 @@ function drawHamsterStraight(ctx, canvas, hamsterIndex, position, numHamsters = 
     }
 }
 
-// Rysowanie własnego chomika z skinami
+
 function drawCustomHamster(ctx, x, y, size) {
     const baseImgSrc = hamsterImages[4];
     const baseImg = loadImage(baseImgSrc);
     
-    // Pobierz skiny w odpowiedniej kolejności
+
     const backSkins = activeSkins.filter(skinId => {
         const skin = availableSkins.find(s => s.id === skinId);
         return skin && skin.layer === 'back';
@@ -1041,63 +1038,59 @@ function drawCustomHamster(ctx, x, y, size) {
         return skin && skin.layer === 'overlay';
     });
     
-    // WARSTWA 1: Rysuj podstawowego chomika - NAJPIERW (podstawa)
-    if (baseImg.complete && baseImg.naturalWidth > 0 && baseImg.naturalHeight > 0) {
+
+    if (isImageReady(baseImg)) {
         ctx.drawImage(baseImg, x - size, y - size, size * 2, size * 2);
     }
-    
-    // WARSTWA 2: Rysuj skiny z tyłu (peleryna) - PO chomiku (NAD chomikiem)
-    // Peleryna jest rysowana nad chomikiem, ale pod overlay
+
     for (let i = 0; i < backSkins.length; i++) {
         const skinId = backSkins[i];
         const skin = availableSkins.find(s => s.id === skinId);
         if (skin && skin.image) {
-            const skinImg = loadImage(`modele homikó/${skin.image}`);
-            // Rysuj tylko jeśli obraz jest w pełni załadowany
-            if (skinImg.complete && skinImg.naturalWidth > 0 && skinImg.naturalHeight > 0) {
+            const skinImg = loadImage(`${IMAGE_BASE_PATH}${skin.image}`);
+            if (isImageReady(skinImg)) {
                 ctx.drawImage(skinImg, x - size, y - size, size * 2, size * 2);
             }
         }
     }
     
-    // WARSTWA 3: Rysuj skiny z przodu (okulary, czapka, korona itp.) - NA KOŃCU, NA SAMYM WIERZCHU
-    // Te skiny są rysowane na końcu, żeby były widoczne na wierzchu wszystkiego
+
     for (let i = 0; i < overlaySkins.length; i++) {
         const skinId = overlaySkins[i];
         const skin = availableSkins.find(s => s.id === skinId);
         if (skin && skin.image) {
-            const skinImg = loadImage(`modele homikó/${skin.image}`);
-            if (skinImg.complete && skinImg.naturalWidth > 0 && skinImg.naturalHeight > 0) {
+            const skinImg = loadImage(`${IMAGE_BASE_PATH}${skin.image}`);
+            if (isImageReady(skinImg)) {
                 ctx.drawImage(skinImg, x - size, y - size, size * 2, size * 2);
             }
         }
     }
 }
 
-// Rysowanie chomika na zakręconym torze
+
 function drawHamsterCurved(ctx, canvas, hamsterIndex, position, finishLine, numHamsters = 4) {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     
-    // Dostosuj do rozmiaru ekranu
+
     const isMobile = window.innerWidth <= 767;
     const margin = isMobile ? 20 : 50;
     const radius = Math.min(canvas.width, canvas.height) / 2 - margin;
     const laneWidth = isMobile ? Math.max(15, radius / 5) : 30;
     const currentRadius = radius - (hamsterIndex * laneWidth);
     
-    // Pozycja kątowa (0-360 stopni)
+
     const angle = (position / finishLine) * Math.PI * 2;
     const x = centerX + Math.cos(angle - Math.PI / 2) * currentRadius;
     const y = centerY + Math.sin(angle - Math.PI / 2) * currentRadius;
     
     const color = hamsterColors[hamsterIndex];
     
-    // Rozmiar kuli i chomika dostosowany do ekranu
+
     const ballRadius = isMobile ? 20 : 30;
     const hamsterSize = isMobile ? 20 : 30;
     
-    // Kula
+
     const gradient = ctx.createRadialGradient(x - ballRadius/3, y - ballRadius/3, 0, x, y, ballRadius);
     if (hamsterIndex === 0) {
         gradient.addColorStop(0, '#ff8a8a');
@@ -1118,19 +1111,19 @@ function drawHamsterCurved(ctx, canvas, hamsterIndex, position, finishLine, numH
     ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
     ctx.fill();
     
-    // Obramowanie dla czarnego
+
     if (hamsterIndex === 3) {
         ctx.strokeStyle = '#f39c12';
         ctx.lineWidth = isMobile ? 2 : 3;
         ctx.stroke();
     }
     
-    // Chomik - jeśli to własny chomik, rysuj z skinami
+
     if (hamsterIndex === 4 && useMyHamster) {
         drawCustomHamster(ctx, x, y, hamsterSize);
     } else {
-        // Standardowy chomik - użyj grafiki z cache
-        const imgSrc = hamsterImages[hamsterIndex] || 'modele homikó/homik.png';
+
+        const imgSrc = hamsterImages[hamsterIndex] || hamsterImages[4];
         const img = loadImage(imgSrc);
         const size = hamsterSize * 2;
         if (img.complete) {
@@ -1143,9 +1136,9 @@ function drawHamsterCurved(ctx, canvas, hamsterIndex, position, finishLine, numH
     }
 }
 
-// Zakończenie wyścigu
+
 function finishRace(positions, speeds) {
-    // Znajdź zwycięzcę
+
     const winnerIndex = positions.indexOf(Math.max(...positions));
     let winner;
     if (winnerIndex < hamsterColors.length) {
@@ -1154,24 +1147,24 @@ function finishRace(positions, speeds) {
         winner = { name: 'Mój Chomik', color: '#f39c12' };
     }
     
-    // Oblicz wygrane
+
     let totalWinnings = 0;
     let won = false;
     
     if (bets[winnerIndex]) {
-        // Wygrana = zakład * 3 (dla czarnego * 2.5, dla własnego chomika * 3.5)
+
         let multiplier = 3;
-        if (winnerIndex === 3) multiplier = 2.5; // Czarny
-        if (winnerIndex === 4) multiplier = 3.5; // Własny chomik
+        if (winnerIndex === 3) multiplier = 2.5;
+        if (winnerIndex === 4) multiplier = 3.5;
         totalWinnings = bets[winnerIndex] * multiplier;
         balance += totalWinnings;
         won = true;
     }
     
-    // Aktualizuj saldo
+
     updateBalance();
     
-    // Pokaż wyniki
+
     const resultsDiv = document.getElementById('results');
     const resultClass = won ? 'win' : 'loss';
     const resultText = won 
@@ -1188,18 +1181,18 @@ function finishRace(positions, speeds) {
     
     document.getElementById('raceStatus').textContent = `🏁 Wyścig zakończony! Zwycięzca: ${winner.name}`;
     
-    // Odblokuj przyciski
+
     raceInProgress = false;
     document.getElementById('startRace').disabled = false;
     document.querySelectorAll('.bet-amount').forEach(input => input.disabled = false);
     
-    // Wyczyść zakłady
+
     document.querySelectorAll('.bet-amount').forEach(input => input.value = '');
     document.querySelectorAll('.hamster-option').forEach(option => option.classList.remove('selected'));
     bets = {};
 }
 
-// Reset wyścigu
+
 function resetRace() {
     if (raceInProgress) return;
     
@@ -1211,17 +1204,17 @@ function resetRace() {
     document.getElementById('raceStatus').textContent = '';
     document.getElementById('results').innerHTML = '';
     
-    // Wyczyść zakłady
+
     document.querySelectorAll('.bet-amount').forEach(input => input.value = '');
     document.querySelectorAll('.hamster-option').forEach(option => option.classList.remove('selected'));
     bets = {};
 }
 
-// Aktualizuj saldo
+
 function updateBalance() {
     if (!currentUser) return;
     
-    // Upewnij się, że balance jest liczbą
+
     balance = parseFloat(balance) || 0;
     
     const balanceElement = document.getElementById('balance');
@@ -1233,7 +1226,7 @@ function updateBalance() {
         legacyBalanceElement.textContent = balance.toFixed(2);
     }
     
-    // Zapisz do localStorage
+
     const userData = getUserData(currentUser);
     if (userData) {
         userData.balance = balance;
@@ -1253,34 +1246,72 @@ function updateBalance() {
 }
 
 function initMiniGames() {
-    const slotsBtn = document.getElementById('playSlots');
-    const slotsBetInput = document.getElementById('slotsBet');
-    const slotsReels = document.getElementById('slotsReels');
-    const slotsResult = document.getElementById('slotsResult');
+    const gameMenuButtons = document.querySelectorAll('.casino-game-btn');
+    const gamePanels = document.querySelectorAll('.casino-game-panel');
+
+    const slotsClassicBtn = document.getElementById('playSlotsClassic');
+    const slotsClassicBetInput = document.getElementById('slotsClassicBet');
+    const slotsClassicReels = document.getElementById('slotsClassicReels');
+    const slotsClassicResult = document.getElementById('slotsClassicResult');
+
+    const slotsTurboBtn = document.getElementById('playSlotsTurbo');
+    const slotsTurboBetInput = document.getElementById('slotsTurboBet');
+    const slotsTurboReels = document.getElementById('slotsTurboReels');
+    const slotsTurboResult = document.getElementById('slotsTurboResult');
+
+    const slotsMegaBtn = document.getElementById('playSlotsMega');
+    const slotsMegaBetInput = document.getElementById('slotsMegaBet');
+    const slotsMegaReels = document.getElementById('slotsMegaReels');
+    const slotsMegaResult = document.getElementById('slotsMegaResult');
+
     const cupButtons = document.querySelectorAll('.cup-choice');
     const cupsBetInput = document.getElementById('cupsBet');
     const cupsResult = document.getElementById('cupsResult');
 
-    if (slotsBtn && slotsBetInput && slotsReels && slotsResult) {
-        const symbols = ['🐹', '🐭', '🐰', '🧀', '⭐'];
-        slotsBtn.addEventListener('click', () => {
-            const bet = parseFloat(slotsBetInput.value);
+    const showGamePanel = (gameName) => {
+        gameMenuButtons.forEach((btn) => {
+            btn.classList.toggle('active', btn.dataset.game === gameName);
+        });
+        gamePanels.forEach((panel) => {
+            panel.classList.toggle('active', panel.dataset.gamePanel === gameName);
+        });
+    };
+
+    if (gameMenuButtons.length > 0 && gamePanels.length > 0) {
+        gameMenuButtons.forEach((btn) => {
+            btn.addEventListener('click', () => showGamePanel(btn.dataset.game));
+        });
+        showGamePanel('slotClassic');
+    }
+
+    const countBestMatch = (rolls) => {
+        const counts = {};
+        rolls.forEach((symbol) => {
+            counts[symbol] = (counts[symbol] || 0) + 1;
+        });
+        return Math.max(...Object.values(counts));
+    };
+
+    if (slotsClassicBtn && slotsClassicBetInput && slotsClassicReels && slotsClassicResult) {
+        const classicSymbols = ['🐹', '🐭', '🐰', '🧀', '⭐'];
+        slotsClassicBtn.addEventListener('click', () => {
+            const bet = parseFloat(slotsClassicBetInput.value);
             if (!bet || bet <= 0) {
-                slotsResult.textContent = 'Podaj poprawną stawkę.';
+                slotsClassicResult.textContent = 'Podaj poprawną stawkę.';
                 return;
             }
             if (bet > balance) {
-                slotsResult.textContent = 'Brak środków na taki zakład.';
+                slotsClassicResult.textContent = 'Brak środków na taki zakład.';
                 return;
             }
 
             balance -= bet;
             const rolls = [
-                symbols[Math.floor(Math.random() * symbols.length)],
-                symbols[Math.floor(Math.random() * symbols.length)],
-                symbols[Math.floor(Math.random() * symbols.length)]
+                classicSymbols[Math.floor(Math.random() * classicSymbols.length)],
+                classicSymbols[Math.floor(Math.random() * classicSymbols.length)],
+                classicSymbols[Math.floor(Math.random() * classicSymbols.length)]
             ];
-            slotsReels.textContent = `${rolls[0]} | ${rolls[1]} | ${rolls[2]}`;
+            slotsClassicReels.textContent = `${rolls[0]} | ${rolls[1]} | ${rolls[2]}`;
 
             let multiplier = 0;
             if (rolls[0] === rolls[1] && rolls[1] === rolls[2]) multiplier = 5;
@@ -1289,9 +1320,88 @@ function initMiniGames() {
             const win = bet * multiplier;
             if (win > 0) {
                 balance += win;
-                slotsResult.textContent = `Wygrana ${win.toFixed(2)} zł (x${multiplier})!`;
+                slotsClassicResult.textContent = `Wygrana ${win.toFixed(2)} zł (x${multiplier})!`;
             } else {
-                slotsResult.textContent = 'Niestety, tym razem bez wygranej.';
+                slotsClassicResult.textContent = 'Niestety, tym razem bez wygranej.';
+            }
+            updateBalance();
+        });
+    }
+
+    if (slotsTurboBtn && slotsTurboBetInput && slotsTurboReels && slotsTurboResult) {
+        const turboSymbols = ['🐹', '🐭', '🐰', '🧀', '⭐', '🍀'];
+        slotsTurboBtn.addEventListener('click', () => {
+            const bet = parseFloat(slotsTurboBetInput.value);
+            if (!bet || bet <= 0) {
+                slotsTurboResult.textContent = 'Podaj poprawną stawkę.';
+                return;
+            }
+            if (bet > balance) {
+                slotsTurboResult.textContent = 'Brak środków na taki zakład.';
+                return;
+            }
+
+            balance -= bet;
+            const rolls = Array.from({ length: 4 }, () => turboSymbols[Math.floor(Math.random() * turboSymbols.length)]);
+            slotsTurboReels.textContent = rolls.join(' | ');
+
+            const bestMatch = countBestMatch(rolls);
+            let multiplier = 0;
+            if (bestMatch === 4) multiplier = 12;
+            else if (bestMatch === 3) multiplier = 5;
+            else if (bestMatch === 2) multiplier = 2;
+
+            if (rolls.includes('🍀') && multiplier > 0) {
+                multiplier += 1;
+            }
+
+            const win = bet * multiplier;
+            if (win > 0) {
+                balance += win;
+                slotsTurboResult.textContent = `Turbo trafione! Wygrana ${win.toFixed(2)} zł (x${multiplier}).`;
+            } else {
+                slotsTurboResult.textContent = 'Turbo nie weszło, spróbuj jeszcze raz.';
+            }
+            updateBalance();
+        });
+    }
+
+    if (slotsMegaBtn && slotsMegaBetInput && slotsMegaReels && slotsMegaResult) {
+        const megaSymbols = ['🐹', '🐭', '🐰', '🧀', '⭐', '💎'];
+        slotsMegaBtn.addEventListener('click', () => {
+            const bet = parseFloat(slotsMegaBetInput.value);
+            if (!bet || bet <= 0) {
+                slotsMegaResult.textContent = 'Podaj poprawną stawkę.';
+                return;
+            }
+            if (bet > balance) {
+                slotsMegaResult.textContent = 'Brak środków na taki zakład.';
+                return;
+            }
+
+            balance -= bet;
+            const rolls = Array.from({ length: 5 }, () => megaSymbols[Math.floor(Math.random() * megaSymbols.length)]);
+            slotsMegaReels.textContent = rolls.join(' | ');
+
+            let multiplier = 0;
+            const bestMatch = countBestMatch(rolls);
+            if (bestMatch === 5) multiplier = 30;
+            else if (bestMatch === 4) multiplier = 12;
+            else if (bestMatch === 3) multiplier = 5;
+
+            if (rolls.every((symbol) => symbol === '⭐')) {
+                multiplier = 50;
+            }
+            if (rolls.includes('💎') && multiplier >= 5) {
+                multiplier += 2;
+            }
+
+            const win = bet * multiplier;
+            if (win > 0) {
+                balance += win;
+                slotsMegaResult.textContent = `MEGA wygrana ${win.toFixed(2)} zł (x${multiplier})!`;
+            } else {
+                slotsMegaResult.textContent = 'Mega slot tym razem pusty.';
             }
             updateBalance();
         });
