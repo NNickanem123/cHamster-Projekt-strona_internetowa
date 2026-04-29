@@ -560,6 +560,28 @@ header h1{
     margin-top: 10px;
 }
 
+/* TRYB NOCNY */
+
+.tryb_nocny {
+  background: #121212;
+  color: #eee;
+}
+
+.tryb_nocny .main {
+  background: #1e1e1e;
+}
+
+.tryb_nocny header,
+.tryb_nocny .navigation,
+.tryb_nocny .obstawianie_panel,
+.tryb_nocny .tor_wyscigowy_div,
+.tryb_nocny .wyniki_div,
+.tryb_nocny .sklep_div,
+.tryb_nocny .chomik_edycja_div {
+  background: #2a2a2a;
+  color: #eee;
+}
+
 @media (max-width: 768px) {
     .gra {
         grid-template-columns: 1fr;
