@@ -119,7 +119,7 @@ function saveCurrentUser() {
     const userData = getUserData(currentUser);
     if (userData) {
         userData.balance = parseFloat(balance) || 0;
-        userData.activeSkins = [...activeSkins]; // Kopia tablicy
+        userData.activeSkins = [...activeSkins]; 
         userData.useMyHamster = useMyHamster;
         saveUserData(currentUser, userData);
     }
@@ -1155,8 +1155,8 @@ function finishRace(positions, speeds) {
     const resultsDiv = document.getElementById('results');
     const resultClass = won ? 'win' : 'loss';
     const resultText = won 
-        ? `🎉 Wygrałeś! ${winner.name} chomik wygrał! Wygrana: ${totalWinnings.toFixed(2)} zł`
-        : `😢 Przegrałeś. ${winner.name} chomik wygrał.`;
+        ? `Wygrałeś! ${winner.name} chomik wygrał! Wygrana: ${totalWinnings.toFixed(2)} zł`
+        : `Przegrałeś. ${winner.name} chomik wygrał.`;
     
     resultsDiv.innerHTML = `
         <div class="result-item ${resultClass}">
