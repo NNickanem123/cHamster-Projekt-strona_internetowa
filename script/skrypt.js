@@ -531,7 +531,7 @@ function updateHamsterEditor() {
             layerItem.className = 'active-layer-item';
             layerItem.innerHTML = `
                 <span>${skin.name}</span>
-                <button onclick="removeSkin('${skinId}')">Usuń</button>
+                <button onclick="removeSkin('${skinId}')" class="btn btn-primary" style="margin-left: 25px;">Usuń</button>
             `;
             activeLayersDiv.appendChild(layerItem);
         });
