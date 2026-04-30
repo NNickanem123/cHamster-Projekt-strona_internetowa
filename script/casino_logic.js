@@ -152,7 +152,7 @@ function initMiniGames() {
             const win = bet * multiplier;
             if (win > 0) {
                 balance += win;
-                slotsMegaResult.textContent = `MEGA wygrana ${win.toFixed(2)} zł (x${multiplier})!`;
+                slotsMegaResult.textContent = `MEGA BIG WIN ${win.toFixed(2)} zł (x${multiplier})!`;
             } else {
                 slotsMegaResult.textContent = 'Mega slot tym razem pusty.';
             }
